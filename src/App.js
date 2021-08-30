@@ -18,17 +18,21 @@ const state0 = {
 };
 
 class App extends React.Component {
-  constructor(props) {
+  state = state0;
+
+  /*constructor(props) {
     super(props);
-    this.state = state0;
+  }*/
+
+  componentDidMount() {
     const storedContacts = localStorage.getItem("phonebook");
     //console.log(storedContacts);
     if (storedContacts !== null) {
-      this.state.contacts = JSON.parse(storedContacts);
+      this.setState({ contacts: JSON.parse(storedContacts) });
     }
   }
 
-  storeContacts() {
+  componentDidUpdate() {
     localStorage.setItem("phonebook", JSON.stringify(this.state.contacts));
   }
 
@@ -45,11 +49,9 @@ class App extends React.Component {
         name: name,
         number: number,
       });
-      //console.log("add", name, number, id);
       this.setState({
         contacts: this.state.contacts,
       });
-      this.storeContacts();
     }
   };
 
@@ -66,7 +68,6 @@ class App extends React.Component {
     this.setState({
       contacts: reducedList,
     });
-    this.storeContacts();
   };
 
   render() {
